@@ -1,0 +1,10 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: spring-boot-config-server
+  datasource:
+    url: jdbc:mysql://localhost:3306/his1222
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
