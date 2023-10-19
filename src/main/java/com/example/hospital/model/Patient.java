@@ -1,18 +1,19 @@
 package com.example.hospital.model;
 
 import lombok.Data;
-import lombok.Getter;
-
 import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Getter
+
 @Data
 @Entity
-@Table(name="usr")
+@Table(name="patient")
 public class Patient {
 
     @Id
@@ -20,22 +21,22 @@ public class Patient {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "gender")
     private int gender;
 
-    @Column(name = "idno")
+    @Column(name = "idno", nullable = false)
     private String idno;
 
-    @Column(name = "birthday")
+    @Column(name = "birthday", nullable = false)
     private LocalDate birthday;
 
-    @Column(name = "age")
+    @Column(name = "age", nullable = false)
     private int age;
 
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     private String address;
 
     @Column(name = "regsit_level_id")
@@ -90,8 +91,6 @@ public class Patient {
     @Column(name = "create_time", nullable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime createTime;
 
-    public Patient(){
-
-    }
-
+    @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Prescription> prescriptions = new ArrayList<>();
 }

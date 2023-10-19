@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@ControllerAdvice
 @RestController
 @RequestMapping("/api/patients")
 public class PatientController {

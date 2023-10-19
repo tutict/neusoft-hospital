@@ -1,15 +1,16 @@
 package com.example.hospital.model;
 
 import lombok.Data;
-import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Data
-@Getter
 @Entity
-@Table(name="user")
+@Table(name="doctor")
 public class Doctor {
 
     @Id
@@ -45,6 +46,6 @@ public class Doctor {
     @Column(name = "create_time", nullable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime createTime;
 
-    public Doctor() {
-    }
+    @OneToMany(mappedBy = "doctor" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Prescription> prescriptions = new ArrayList<>();
 }
