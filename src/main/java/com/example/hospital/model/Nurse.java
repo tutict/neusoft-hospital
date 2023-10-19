@@ -17,6 +17,6 @@ public class Nurse {
     private String name;
     private String telephone;
 
-    @ManyToMany(mappedBy = "nurses")
-    private List<Patient> patients = new ArrayList<>();
+    @ManyToMany(mappedBy = "patients")
+    private List<Nurse> nurses = new ArrayList<>();
 }

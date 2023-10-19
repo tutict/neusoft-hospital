@@ -91,6 +91,9 @@ public class Patient {
     @Column(name = "create_time", nullable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime createTime;
 
-    @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Prescription> prescriptions = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "nurses")
+    private List<Patient> patients = new ArrayList<>();
 }
