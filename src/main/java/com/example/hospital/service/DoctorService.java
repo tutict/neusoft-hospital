@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class DoctorService {
-    private final DoctorRepository doctorRepository;
+    private static DoctorRepository doctorRepository = null;
 
     public DoctorService(DoctorRepository doctorRepository) {
-        this.doctorRepository = doctorRepository;
+        DoctorService.doctorRepository = doctorRepository;
     }
 
     public Optional<Doctor> getDoctorById(Long id) {
@@ -62,7 +61,7 @@ public class DoctorService {
     }
 
     public Doctor saveDoctor(Doctor doctor) {
-        return (Doctor) doctorRepository.save(doctor);
+        return doctorRepository.save(doctor);
     }
 
     public List<Doctor> getAllDoctors() {
