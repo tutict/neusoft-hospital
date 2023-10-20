@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Data
 @Entity
 @Table(name="doctor")
+@Data
 public class Doctor {
 
     @Id
@@ -21,16 +21,14 @@ public class Doctor {
     @Column(name = "username", nullable = false)
     private String name;
 
-    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "realname", nullable = false)
     private String realname;
 
-    @Column(name = "telephone", nullable = false)
     private String telephone;
 
-    @Column(name = "dept_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "dept_id")
     private Long deptId;
 
     @Column(name = "user_type", nullable = false)
@@ -39,7 +37,6 @@ public class Doctor {
     @Column(name = "last_login", nullable = false)
     private LocalDateTime lastLogin;
 
-    @Column(name = "active", nullable = false, columnDefinition = "int default 1 comment '1:active, 0:inactive'")
     private int active = 1;
 
     @CreationTimestamp

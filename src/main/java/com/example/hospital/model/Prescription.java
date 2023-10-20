@@ -16,6 +16,7 @@ import java.util.List;
 public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "prescription_id")
     private Long prescriptionId;
 
     @ManyToOne
@@ -23,11 +24,14 @@ public class Prescription {
     @JoinColumn(name = "doctor_id")
     private Prescription prescription;
 
+    @Column(name = "date_issued")
     private LocalDate dateIssued;
 
+    @Column(name = "total_cost")
     private BigDecimal totalCost;
 
     @CreationTimestamp
+    @Column(name = "create_time")
     private LocalDateTime createTime;
 
     @OneToMany(mappedBy = "prescription", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
