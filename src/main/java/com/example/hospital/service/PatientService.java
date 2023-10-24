@@ -3,15 +3,14 @@ package com.example.hospital.service;
 
 import com.example.hospital.model.Patient;
 import com.example.hospital.repository.PatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
+@Service
 public class PatientService {
     private final PatientRepository patientRepository;
     public PatientService(PatientRepository patientRepository) {

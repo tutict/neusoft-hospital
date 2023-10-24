@@ -19,11 +19,14 @@ public class billing {
     @Column(name = "patient_id", nullable = false)
     private Patient patientId;
 
+    @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "amount", nullable = false, precision = 10, scale = 2)
     private String amount;
 
     @Column(name = "bill_date", nullable = false)
+    @Temporal(TemporalType.DATE)
     private LocalDateTime billDate;
 
 }

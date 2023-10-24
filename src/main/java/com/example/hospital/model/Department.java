@@ -16,6 +16,6 @@ public class Department {
     @Column(name = "dept_name", nullable = false)
     private String deptName;
 
-    @Column(name = "dept_description")
+    @Column(name = "dept_description", columnDefinition = "TEXT")
     private String deptDescription;
 }
