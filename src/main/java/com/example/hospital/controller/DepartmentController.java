@@ -24,34 +24,5 @@ public class DepartmentController {
         return ResponseEntity.ok(createdDepartment);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Department>> getAllDepartments(@RequestParam(required = false) String name,
-                                                              @RequestParam(required = false) String description) {
-        if (name != null) {
-            return ResponseEntity.ok(departmentService.getDepartmentByName(name));
-        } else if (description != null) {
-            return ResponseEntity.ok(departmentService.getDepartmentByDescription(description));
-        }
-        return ResponseEntity.ok(departmentService.getAllDepartments());
-    }
 
-    @GetMapping("/{deptId}")
-    public ResponseEntity<Department> getDepartmentById(@PathVariable Long deptId) {
-        Optional<Department> departmentOpt = Optional.ofNullable(departmentService.getDepartmentById(deptId));
-        return departmentOpt.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PutMapping("/{deptId}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable Long deptId, @RequestBody Department department) {
-        Optional<Department> updatedDepartmentOpt = Optional.ofNullable(departmentService.updateDepartment(deptId, department));
-        return updatedDepartmentOpt.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @DeleteMapping("/{deptId}")
-    public ResponseEntity<Void> deleteDepartment(@PathVariable Long deptId) {
-        if (departmentService.deleteDepartment(deptId)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
-    }
 }

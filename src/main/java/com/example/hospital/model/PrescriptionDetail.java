@@ -32,4 +32,5 @@ public class PrescriptionDetail {
 
     @Column(name = "dosage_instructions", columnDefinition = "TEXT")
     private String dosageInstructions;
+
 }

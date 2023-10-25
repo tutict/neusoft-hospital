@@ -26,11 +26,6 @@ public class BillingController {
         return new ResponseEntity<>(billings, OK);
     }
 
-    @GetMapping("/find/{id}")
-    public ResponseEntity<List<billing>> getbillingByBillId(@PathVariable("id") Long id) {
-        List<billing> billing = billingService.getbillingByBillId(id);
-        return new ResponseEntity<>(billing, HttpStatus.OK);
-    }
 
     @PostMapping("/save")
     public ResponseEntity<billing> savebilling(@RequestBody billing billing) {
@@ -49,7 +44,6 @@ public class BillingController {
         billingService.deletebilling(id);
         return new ResponseEntity<>(OK);
     }
-
 
 
 }

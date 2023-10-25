@@ -34,7 +34,7 @@ public class BillingService {
         return false;
     }
 
-    public billing updateBilling(Long billId, billing billing) {
+    public billing updateBilling(billing billing) {
         Optional<billing> optionalBilling = billingRepository.findById(billId);
         if(optionalBilling.isEmpty()) {
             throw new EntityNotFoundException("Billing with id " + billId + " not found");
@@ -72,4 +72,5 @@ public class BillingService {
             predicates.add(function.apply(value));
         }
     }
+
 }

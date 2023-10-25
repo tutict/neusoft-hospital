@@ -19,7 +19,7 @@ public class DepartmentService {
         this.departmentRepository = departmentRepository;
     }
 
-    public List<Department> getAllDepartments() {
+    public List<Department> getAllDepartments(Long name) {
         return departmentRepository.findAll();
     }
 

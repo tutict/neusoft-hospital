@@ -14,42 +14,43 @@ import java.util.function.Function;
 @Service
 public class UsersService {
 
-    private final UsersService usersService;
+    public final UsersRepository usersRepository;
 
-    public UsersService(UsersService usersService){
-        this.usersService = usersService;
+    public UsersService(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
     }
 
+
     public void deleteUsersById(Long id){
-        usersService.deleteUsersById(id);
+        usersRepository.deleteById(id);
     }
 
     public Users saveUsers(Users users){
-        return usersService.saveUsers(users);
+        return usersRepository.save(users);
     }
 
     public Optional<Users> getUsersById(Long id){
-        return usersService.getUsersById(id);
+        return Optional.of(usersRepository.getById(id));
     }
 
-    public Optional<Users> updateUsers(Long id, Users usersDetails){
-        return usersService.getUsersById(id).map(users -> {
+    public Optional<Users> updateUsers(Long id, Users usersDetails) {
+        return usersRepository.findById(id).map(users -> {
             users.setUsername(usersDetails.getUsername());
             users.setPassword(usersDetails.getPassword());
-            users.setUsername(usersDetails.getUsername());
             users.setPhone(usersDetails.getPhone());
             users.setUserType(usersDetails.getUserType());
-            return usersService.saveUsers(users);
+
+            return usersRepository.save(users);
         });
     }
 
     public List<Users> findUsers(String username, String password, String realname, String telephone, Long deptId, Long userType, Integer active, LocalDateTime createTime, LocalDateTime lastLogin) {
-        return usersService.findAll((root, query, criteriaBuilder) -> {
+        return usersRepository.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            addIfNotNull(predicates, username, value -> criteriaBuilder.equal(root.get("username"), value));
+            addIfNotNull(predicates, username, value -> criteriaBuilder.like(root.get("username"), "%" + value + "%"));
             addIfNotNull(predicates, password, value -> criteriaBuilder.equal(root.get("password"), value));
-            addIfNotNull(predicates, realname, value -> criteriaBuilder.equal(root.get("realname"), value));
+            addIfNotNull(predicates, realname, value -> criteriaBuilder.like(root.get("realname"), "%" + value + "%"));
             addIfNotNull(predicates, telephone, value -> criteriaBuilder.equal(root.get("telephone"), value));
             addIfNotNull(predicates, deptId, value -> criteriaBuilder.equal(root.get("deptId"), value));
             addIfNotNull(predicates, userType, value -> criteriaBuilder.equal(root.get("userType"), value));
@@ -61,10 +62,9 @@ public class UsersService {
         });
     }
 
-    private <T> void addIfNotNull(List<Predicate> predicates, T value, Function<T, Predicate> function){
-        if(value != null){
+    private <T> void addIfNotNull(List<Predicate> predicates, T value, Function<T, Predicate> function) {
+        if (value != null) {
             predicates.add(function.apply(value));
         }
     }
-
 }
