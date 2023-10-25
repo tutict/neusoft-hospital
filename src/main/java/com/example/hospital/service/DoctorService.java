@@ -2,8 +2,6 @@ package com.example.hospital.service;
 
 import com.example.hospital.model.Doctor;
 import com.example.hospital.repository.DoctorRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.Path;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.criteria.Predicate;
 

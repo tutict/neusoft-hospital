@@ -1,14 +1,15 @@
 package com.example.hospital.service;
 
-import com.example.hospital.model.Patient;
 import com.example.hospital.model.billing;
 import com.example.hospital.repository.BillingRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 public class BillingService {
@@ -22,30 +23,6 @@ public class BillingService {
 
     public List<billing> getAllbillings() {
         return billingRepository.findAll();
-    }
-
-    public List<billing> getbillingByBillId(Long billId) {
-        return billingRepository.findByBillId(billId);
-    }
-
-    public List<billing> getbillingByPatientId(Patient patientId) {
-        return billingRepository.findByPatientId(patientId);
-    }
-
-    public List<billing> getbillingByDescription(String description) {
-        return billingRepository.findByDescription(description);
-    }
-
-    public List<billing> getbillingByAmount(String amount) {
-        return billingRepository.findByAmount(amount);
-    }
-
-    public List<billing> getbillingByBillDate(LocalDateTime billDate) {
-        return billingRepository.findByBillDate(billDate);
-    }
-
-    public billing getbillingById(Long billId) {
-        return billingRepository.findById(billId).orElse(null);
     }
 
     public billing savebilling(billing billing) {
@@ -66,7 +43,33 @@ public class BillingService {
         return billingRepository.save(billing);
     }
 
-    public billing updateBilling(billing billing) {
-        return null;
+    public List<billing> findBilling(
+            Long billId,
+            Long patientId,
+            Long itemId,
+            LocalDateTime billDate,
+            Double price,
+            Integer quantity,
+            Double amount
+    ){
+        return billingRepository.findAll((root, query, criteriaBuilder) -> {
+            List<jakarta.persistence.criteria.Predicate> predicates = new java.util.ArrayList<>();
+
+            addIfNotNull(predicates, billId, value -> criteriaBuilder.equal(root.get("billId"), value));
+            addIfNotNull(predicates, patientId, value -> criteriaBuilder.equal(root.get("patientId"), value));
+            addIfNotNull(predicates, itemId, value -> criteriaBuilder.equal(root.get("itemId"), value));
+            addIfNotNull(predicates, billDate, value -> criteriaBuilder.equal(root.get("billDate"), value));
+            addIfNotNull(predicates, price, value -> criteriaBuilder.equal(root.get("price"), value));
+            addIfNotNull(predicates, quantity, value -> criteriaBuilder.equal(root.get("quantity"), value));
+            addIfNotNull(predicates, amount, value -> criteriaBuilder.equal(root.get("amount"), value));
+
+            return criteriaBuilder.and(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
+        });
+    }
+
+    private <T> void addIfNotNull(List<Predicate> predicates, T value, Function<T, Predicate> function) {
+        if (value != null) {
+            predicates.add(function.apply(value));
+        }
     }
 }
