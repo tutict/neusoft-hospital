@@ -4,7 +4,6 @@ import com.example.hospital.model.billing;
 import com.example.hospital.service.BillingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

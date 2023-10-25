@@ -6,8 +6,11 @@ import com.example.hospital.repository.DoctorRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import jakarta.persistence.criteria.Predicate;
+
 @Service
 public class DoctorService {
     private static DoctorRepository doctorRepository = null;
@@ -20,42 +23,6 @@ public class DoctorService {
         return doctorRepository.findById(id);
     }
 
-    public List<Doctor> getDoctorByName(String name) {
-        return doctorRepository.findByName(name);
-    }
-
-    public List<Doctor> getDoctorByPassword(String password) {
-        return doctorRepository.findByPassword(password);
-    }
-
-    public List<Doctor> getDoctorByRealname(String realname) {
-        return doctorRepository.findByRealname(realname);
-    }
-
-    public List<Doctor> getDoctorByTelephone(String telephone) {
-        return doctorRepository.findByTelephone(telephone);
-    }
-
-    public List<Doctor> getDoctorByDeptId(Long deptId) {
-        return doctorRepository.findByDeptId(deptId);
-    }
-
-    public List<Doctor> getDoctorByUserType(Long userType) {
-        return doctorRepository.findByUserType(userType);
-    }
-
-    public List<Doctor> getDoctorByActive(int active) {
-        return doctorRepository.findByActive(active);
-    }
-
-    public List<Doctor> getDoctorByCreateTime(LocalDateTime createTime) {
-        return doctorRepository.findByCreateTime(createTime);
-    }
-
-    public List<Doctor> getDoctorByLastLogin(LocalDateTime lastLogin) {
-        return doctorRepository.findByLastLogin(lastLogin);
-    }
-
     public void deleteDoctorById(Long id) {
         doctorRepository.deleteById(id);
     }
@@ -64,8 +31,41 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
-    public List<Doctor> getAllDoctors() {
-        return doctorRepository.findAll();
+    public List<Doctor> findDoctors(String name, String password, String realname, String telephone, Long deptId, Long userType, Integer active, LocalDateTime createTime, LocalDateTime lastLogin) {
+        return doctorRepository.findAll((root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (name != null) {
+                predicates.add(criteriaBuilder.equal(root.get("name"), name));
+            }
+            if (password != null) {
+                predicates.add(criteriaBuilder.equal(root.get("password"), password));
+            }
+            if (realname != null) {
+                predicates.add(criteriaBuilder.equal(root.get("realname"), realname));
+            }
+            if (telephone != null) {
+                predicates.add(criteriaBuilder.equal(root.get("telephone"), telephone));
+            }
+            if (deptId != null) {
+                predicates.add(criteriaBuilder.equal(root.get("deptId"), deptId));
+            }
+            if (userType != null) {
+                predicates.add(criteriaBuilder.equal(root.get("userType"), userType));
+            }
+            if (active != null) {
+                predicates.add(criteriaBuilder.equal(root.get("active"), active));
+            }
+            if (createTime != null) {
+                predicates.add(criteriaBuilder.equal(root.get("createTime"), createTime));
+            }
+            if (lastLogin != null) {
+                predicates.add(criteriaBuilder.equal(root.get("lastLogin"), lastLogin));
+            }
+
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        });
     }
 
 }
