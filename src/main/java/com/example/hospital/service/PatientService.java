@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+
 import jakarta.persistence.criteria.Predicate;
 
 @Service
@@ -75,104 +77,37 @@ public class PatientService {
     ) {
         return patientRepository.findAll((root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
-
-            if (name != null && !name.trim().isEmpty()) {
-                predicates.add(cb.like(root.get("name"), "%" + name + "%"));
-            }
-
-            if (gender != null) {
-                predicates.add(cb.equal(root.get("gender"), gender));
-            }
-
-            if (idno != null && !idno.trim().isEmpty()) {
-                predicates.add(cb.like(root.get("idno"), "%" + idno + "%"));
-            }
-
-            if (birthday != null) {
-                predicates.add(cb.equal(root.get("birthday"), birthday));
-            }
-
-            // 这里的逻辑是为每个属性添加一个查询谓词，以此类推
-            if (age != null) {
-                predicates.add(cb.equal(root.get("age"), age));
-            }
-
-            if (address != null && !address.trim().isEmpty()) {
-                predicates.add(cb.like(root.get("address"), "%" + address + "%"));
-            }
-
-            if (regsitLevelId != null) {
-                predicates.add(cb.equal(root.get("regsit_level_id"), regsitLevelId));
-            }
-
-            if (deptId != null) {
-                predicates.add(cb.equal(root.get("dept_id"), deptId));
-            }
-
-            if (doctorId != null) {
-                predicates.add(cb.equal(root.get("doctor_id"), doctorId));
-            }
-
-            if (book != null) {
-                predicates.add(cb.equal(root.get("book"), book));
-            }
-
-            if (visittime != null) {
-                predicates.add(cb.equal(root.get("visittime"), visittime));
-            }
-
-            if (fee != null) {
-                predicates.add(cb.equal(root.get("fee"), fee));
-            }
-
-            if (readme != null && !readme.trim().isEmpty()) {
-                predicates.add(cb.like(root.get("readme"), "%" + readme + "%"));
-            }
-
-            if (present != null && !present.trim().isEmpty()) {
-                predicates.add(cb.like(root.get("present"), "%" + present + "%"));
-            }
-
-            if (presentTreat != null && !presentTreat.trim().isEmpty()) {
-                predicates.add(cb.like(root.get("present_treat"), "%" + presentTreat + "%"));
-            }
-
-            if (history != null && !history.trim().isEmpty()) {
-                predicates.add(cb.like(root.get("history"), "%" + history + "%"));
-            }
-
-            if (allergy != null && !allergy.trim().isEmpty()) {
-                predicates.add(cb.like(root.get("allergy"), "%" + allergy + "%"));
-            }
-
-            if (disease != null && !disease.trim().isEmpty()) {
-                predicates.add(cb.like(root.get("disease"), "%" + disease + "%"));
-            }
-
-            if (suit != null && !suit.trim().isEmpty()) {
-                predicates.add(cb.like(root.get("suit"), "%" + suit + "%"));
-            }
-
-            if (drug != null) {
-                predicates.add(cb.like(root.get("drug"), "%" + drug + "%"));
-            }
-
-            if (status != null) {
-                predicates.add(cb.equal(root.get("status"), status));
-            }
-
-            if (active != null) {
-                predicates.add(cb.equal(root.get("active"), active));
-            }
-
-            if (createTime != null) {
-                predicates.add(cb.equal(root.get("create_time"), createTime));
-            }
-
+            addIfNotNull(predicates, name, value -> cb.like(root.get("name"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, gender, value -> cb.equal(root.get("gender"), value));
+            addIfNotNull(predicates, idno, value -> cb.like(root.get("idno"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, birthday, value -> cb.equal(root.get("birthday"), value));
+            addIfNotNull(predicates, age, value -> cb.equal(root.get("age"), value));
+            addIfNotNull(predicates, address, value -> cb.like(root.get("address"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, regsitLevelId, value -> cb.equal(root.get("regsitLevelId"), value));
+            addIfNotNull(predicates, deptId, value -> cb.equal(root.get("deptId"), value));
+            addIfNotNull(predicates, doctorId, value -> cb.equal(root.get("doctorId"), value));
+            addIfNotNull(predicates, book, value -> cb.equal(root.get("book"), value));
+            addIfNotNull(predicates, visittime, value -> cb.equal(root.get("visittime"), value));
+            addIfNotNull(predicates, fee, value -> cb.like(root.get("fee"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, readme, value -> cb.like(root.get("readme"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, present, value -> cb.like(root.get("present"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, presentTreat, value -> cb.like(root.get("presentTreat"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, history, value -> cb.like(root.get("history"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, allergy, value -> cb.like(root.get("allergy"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, disease, value -> cb.like(root.get("disease"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, suit, value -> cb.like(root.get("suit"), "%" + value.trim() + "%"));
+            addIfNotNull(predicates, drug, value -> cb.equal(root.get("drug"), value));
+            addIfNotNull(predicates, status, value -> cb.equal(root.get("status"), value));
+            addIfNotNull(predicates, active, value -> cb.equal(root.get("active"), value));
+            addIfNotNull(predicates, createTime, value -> cb.equal(root.get("createTime"), value));
 
             return cb.and(predicates.toArray(new Predicate[0]));
         });
     }
 
-
+        private <T> void addIfNotNull(List<Predicate> predicates, T value, Function<T, Predicate> function) {
+            if (value != null) {
+                predicates.add(function.apply(value));
+            }
+        }
 }

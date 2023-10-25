@@ -215,6 +215,11 @@
             <artifactId>httpcore</artifactId>
             <version>4.4.15</version>
         </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.12.1</version>
+        </dependency>
     </dependencies>
 
     <build>

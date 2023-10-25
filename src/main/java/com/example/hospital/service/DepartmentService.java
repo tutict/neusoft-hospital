@@ -21,24 +21,15 @@ public class DepartmentService {
         return departmentRepository.findAll();
     }
 
-    public List<Department> getDepartmentByName(String deptName) {
-        return departmentRepository.findByDeptName(deptName);
-    }
-
-    public List<Department> getDepartmentByDescription(String description) {
-        return departmentRepository.findByDeptDescription(description);
-    }
-
-    public Department getDepartmentById(Long deptId) {
-        return departmentRepository.findById(deptId).orElse(null);
-    }
-
     public Department saveDepartment(Department department) {
         return departmentRepository.save(department);
     }
 
     public boolean deleteDepartment(Long deptId) {
-        departmentRepository.deleteById(deptId);
+        if (departmentRepository.existsById(deptId)) {
+            departmentRepository.deleteById(deptId);
+            return true;
+        }
         return false;
     }
 
@@ -49,6 +40,18 @@ public class DepartmentService {
             departmentRepository.save(department);
         }
         return department;
+    }
+
+    public List<Department> findDepartment(
+
+            Long deptId,
+
+            String deptName,
+
+            String deptDescription
+
+    ){
+
     }
 
 
