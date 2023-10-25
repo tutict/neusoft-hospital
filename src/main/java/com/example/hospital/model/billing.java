@@ -1,13 +1,13 @@
 package com.example.hospital.model;
 
 import lombok.Data;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
+@Data
 @Entity
 @Table(name = "billing", schema = "his1222")
-@Data
 public class billing {
 
     @Id
@@ -15,18 +15,16 @@ public class billing {
     @Column(name = "bill_id")
     private Long billId;
 
-    @ManyToOne
-    @Column(name = "patient_id", nullable = false)
-    private Patient patientId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "patient_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "billing_ibfk_1"))
+    private Patient patient;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "amount", nullable = false, precision = 10, scale = 2)
-    private String amount;
+    @Column(name = "amount")
+    private BigDecimal amount;
 
-    @Column(name = "bill_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private LocalDateTime billDate;
-
+    @Column(name = "bill_date")
+    private LocalDate billDate;
 }

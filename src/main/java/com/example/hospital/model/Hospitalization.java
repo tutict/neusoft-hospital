@@ -1,38 +1,35 @@
 package com.example.hospital.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Data;
-import org.joda.time.LocalDateTime;
+import javax.persistence.*;
+import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
-@Entity
-@Table(name = "hospitalization")
 @Data
+@Entity
+@Table(name = "hospitalization", schema = "his1222")
 public class Hospitalization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hosp_id", nullable = false)
-    private Long id;
+    @Column(name = "hosp_id")
+    private Long hospId;
 
-    @Column(name = "patient_id", nullable = false)
+    @Column(name = "patient_id")
     private Long patientId;
 
-    @Column(name = "admission_date", nullable = false)
-    private LocalDateTime adminssionDate;
+    @Column(name = "admission_date")
+    private LocalDate admissionDate;
 
-    @Column(name = "discharge_date", nullable = false)
-    private LocalDateTime dischargeTime;
+    @Column(name = "discharge_date")
+    private LocalDate dischargeDate;
 
-    @Column(name = "room_number", nullable = false)
-    private Long roomNumber;
+    @Column(name = "room_number")
+    private String roomNumber;
 
-    @Column(name = "bed_number", nullable = false)
-    private Long bedNumber;
+    @Column(name = "bed_number")
+    private String bedNumber;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id", insertable = false, updatable = false)
+    private Patient patient;
 }

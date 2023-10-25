@@ -1,21 +1,22 @@
 package com.example.hospital.model;
 
 import lombok.Data;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
 
-@Entity
-@Table(name = "examination_items")
 @Data
-public class examinationItems {
+@Entity
+@Table(name = "examination_items", schema = "his1222")
+public class examinationItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
     private Long itemId;
 
-    @Column(name = "item_name", nullable = false)
+    @Column(name = "item_name")
     private String itemName;
 
-    private Long cost;
+    @Column(name = "cost")
+    private BigDecimal cost;
 }

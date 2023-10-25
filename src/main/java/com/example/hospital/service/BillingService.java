@@ -3,6 +3,7 @@ package com.example.hospital.service;
 import com.example.hospital.model.Patient;
 import com.example.hospital.model.billing;
 import com.example.hospital.repository.BillingRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -56,14 +57,16 @@ public class BillingService {
         return false;
     }
 
-    public billing updatebilling(Long billId, billing billing) {
-        Optional<billing> optionalbilling = billingRepository.findById(billId);
-        if(optionalbilling.isPresent()) {
-            billing.setBillId(billId);
-            billingRepository.save(billing);
+    public billing updateBilling(Long billId, billing billing) {
+        Optional<billing> optionalBilling = billingRepository.findById(billId);
+        if(optionalBilling.isEmpty()) {
+            throw new EntityNotFoundException("Billing with id " + billId + " not found");
         }
-        return billing;
+        billing.setBillId(billId);
+        return billingRepository.save(billing);
     }
 
-
+    public billing updateBilling(billing billing) {
+        return null;
+    }
 }

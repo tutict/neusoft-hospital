@@ -1,19 +1,16 @@
 package com.example.hospital.model;
 
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
-@Table(name="patient")
+@Table(name = "patient", schema = "his1222")
 public class Patient {
 
     @Id
@@ -22,28 +19,30 @@ public class Patient {
 
     private String name;
 
-    private int gender;
+    private Integer gender;
 
+    @Column(name = "idno")
     private String idno;
 
     private LocalDate birthday;
 
-    private int age;
+    private Integer age;
 
     private String address;
 
     @Column(name = "regsit_level_id")
-    private int regsitLevelId;
+    private Integer regsitLevelId;
 
     @Column(name = "dept_id")
-    private int deptId;
+    private Integer deptId;
 
     @Column(name = "doctor_id")
-    private int doctorId;
+    private Integer doctorId;
 
-    private int book;
+    private Integer book;
 
-    private LocalDate visittime;
+    @Column(name = "visittime")
+    private LocalDate visitTime;
 
     private BigDecimal fee;
 
@@ -64,17 +63,23 @@ public class Patient {
 
     private String drug;
 
-    private int status;
+    private Integer status;
 
-    private int active = 1;
+    private Integer active;
 
-    @CreationTimestamp
-    @Column(name = "create_time", nullable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
+    @Column(name = "create_time", updatable = false, insertable = false)
     private LocalDateTime createTime;
 
-    @OneToMany(mappedBy = "patient" , cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
-    private List<Prescription> prescriptions = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    private Doctor doctor;
 
-    @ManyToMany(mappedBy = "nurses")
-    private List<Patient> patients = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "patient_nurses",
+            joinColumns = @JoinColumn(name = "patient_id"),
+            inverseJoinColumns = @JoinColumn(name = "nurse_id")
+    )
+    private Set<Nurse> nurses = new HashSet<>();
+
 }
