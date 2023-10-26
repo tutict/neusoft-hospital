@@ -1,14 +1,14 @@
 package com.example.hospital.model;
 
+import com.example.hospital.model.Patient;
+import jakarta.persistence.*;
 import lombok.Data;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
-@Data
 @Entity
+@Data
 @Table(name = "billing", schema = "his1222")
-public class billing {
+public class Billing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,12 +1,15 @@
 package com.example.hospital.service;
 
-import com.example.hospital.model.billing;
+import com.example.hospital.model.Billing;
 import com.example.hospital.repository.BillingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.Predicate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -16,26 +19,26 @@ public class BillingService {
 
     private final BillingRepository billingRepository;
 
-
+    @Autowired
     public BillingService(BillingRepository billingRepository) {
         this.billingRepository = billingRepository;
     }
 
-    public List<billing> getAllbillings() {
+    public List<Billing> getAllbillings() {
         return billingRepository.findAll();
     }
 
-    public billing savebilling(billing billing) {
+    public Billing savebilling(Billing billing) {
         return billingRepository.save(billing);
     }
 
-    public boolean deletebilling(Long billId) {
+    public void deleteBilling(Long billId) {
         billingRepository.deleteById(billId);
-        return false;
     }
 
-    public billing updateBilling(billing billing) {
-        Optional<billing> optionalBilling = billingRepository.findById(billId);
+
+    public Billing updateBilling(Billing billing, Long billId) {
+        Optional<Billing> optionalBilling = billingRepository.findById(billId);
         if(optionalBilling.isEmpty()) {
             throw new EntityNotFoundException("Billing with id " + billId + " not found");
         }
@@ -43,27 +46,23 @@ public class BillingService {
         return billingRepository.save(billing);
     }
 
-    public List<billing> findBilling(
+    public List<Billing> findBilling(
             Long billId,
             Long patientId,
-            Long itemId,
-            LocalDateTime billDate,
-            Double price,
-            Integer quantity,
-            Double amount
+            String description,
+            LocalDate billDate,
+            BigDecimal amount
     ){
         return billingRepository.findAll((root, query, criteriaBuilder) -> {
-            List<jakarta.persistence.criteria.Predicate> predicates = new java.util.ArrayList<>();
+            List<Predicate> predicates = new ArrayList<>();
 
             addIfNotNull(predicates, billId, value -> criteriaBuilder.equal(root.get("billId"), value));
             addIfNotNull(predicates, patientId, value -> criteriaBuilder.equal(root.get("patientId"), value));
-            addIfNotNull(predicates, itemId, value -> criteriaBuilder.equal(root.get("itemId"), value));
             addIfNotNull(predicates, billDate, value -> criteriaBuilder.equal(root.get("billDate"), value));
-            addIfNotNull(predicates, price, value -> criteriaBuilder.equal(root.get("price"), value));
-            addIfNotNull(predicates, quantity, value -> criteriaBuilder.equal(root.get("quantity"), value));
             addIfNotNull(predicates, amount, value -> criteriaBuilder.equal(root.get("amount"), value));
+            addIfNotNull(predicates, description, value -> criteriaBuilder.equal(root.get("description"), value));
 
-            return criteriaBuilder.and(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
     }
 
@@ -72,5 +71,4 @@ public class BillingService {
             predicates.add(function.apply(value));
         }
     }
-
 }

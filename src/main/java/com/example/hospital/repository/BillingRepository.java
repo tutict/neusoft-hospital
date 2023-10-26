@@ -1,14 +1,12 @@
 package com.example.hospital.repository;
 
-import com.example.hospital.model.Patient;
-import com.example.hospital.model.billing;
+import com.example.hospital.model.Billing;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 
-public interface BillingRepository extends JpaRepository<billing, Long>, JpaSpecificationExecutor<billing> {
+@Repository
+public interface BillingRepository extends JpaRepository<Billing, Long>, JpaSpecificationExecutor<Billing> {
 
 }
