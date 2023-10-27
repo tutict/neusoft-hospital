@@ -1,5 +1,6 @@
 package com.example.hospital.model;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class Nurse {
     @Column(name = "nurse_name")
     private String nurseName;
 
+    @Pattern(regexp = "^[0-9]{10,15}$")
     private String telephone;
 
     @Column(name = "dept_id")

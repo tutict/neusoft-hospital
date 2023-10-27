@@ -2,6 +2,7 @@ package com.example.hospital.controller;
 
 import com.example.hospital.model.Nurse;
 import com.example.hospital.service.NurseService;
+import jakarta.validation.Valid;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,12 +48,12 @@ public class NurseController {
     }
 
     @PostMapping
-    public Nurse saveNurse(@RequestBody Nurse nurse) {
+    public Nurse saveNurse(@Valid @RequestBody Nurse nurse) {
         return nurseService.saveNurse(nurse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Nurse> updateNurse(@PathVariable Long id, @RequestBody Nurse nurse) {
+    public ResponseEntity<Nurse> updateNurse(@PathVariable Long id, @Valid @RequestBody Nurse nurse) {
         Nurse updatedNurse = nurseService.updateNurse(id, nurse);
         if (updatedNurse != null) {
             return ResponseEntity.ok(updatedNurse);

@@ -1,0 +1,15 @@
+{
+  "name": "neusoft-hospital-font",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "latest",
+    "vue": "3.3.7",
+    "vue-router": "4.2.5",
+    "vuex": "latest",
+    "axios": "latest",
+    "element-plus": "latest",
+    "veaury": "latest"
+  }
+}

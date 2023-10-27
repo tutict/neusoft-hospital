@@ -2,6 +2,7 @@ package com.example.hospital.controller;
 
 import com.example.hospital.model.Doctor;
 import com.example.hospital.service.DoctorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,12 +45,12 @@ public class DoctorController {
     }
 
     @PostMapping
-    public Doctor saveDoctor(@RequestBody Doctor doctor) {
+    public Doctor saveDoctor(@Valid @RequestBody Doctor doctor) {
         return doctorService.saveDoctor(doctor);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody Doctor doctorDetails) {
+    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @Valid @RequestBody Doctor doctorDetails) {
         return doctorService.updateDoctor(id, doctorDetails)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

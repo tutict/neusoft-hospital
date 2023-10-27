@@ -1,5 +1,7 @@
 package com.example.hospital.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -23,8 +25,10 @@ public class Users {
     @Column(nullable = false, name = "user_type")
     private UserType userType;
 
+    @Email
     private String email;
 
+    @Pattern(regexp = "^[0-9]{10,15}$")
     private String phone;
 
     enum UserType {
