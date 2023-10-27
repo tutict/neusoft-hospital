@@ -28,6 +28,6 @@ public class Users {
     private String phone;
 
     enum UserType {
-        DOCTOR, NURSE, PATIENT;
+        DOCTOR, NURSE, PATIENT
     }
 }
