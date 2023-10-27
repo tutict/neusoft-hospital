@@ -28,8 +28,8 @@ public class UsersService {
         return usersRepository.save(users);
     }
 
-    public Optional<Users> getUsersById(Long id){
-        return Optional.of(usersRepository.getById(id));
+    public Optional<Optional<Users>> getUsersById(Long id){
+        return Optional.of(usersRepository.findById(id));
     }
 
     public Optional<Users> updateUsers(Long id, Users usersDetails) {

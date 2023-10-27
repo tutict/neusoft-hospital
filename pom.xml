@@ -89,11 +89,6 @@
             <version>1.16</version>
         </dependency>
         <dependency>
-            <groupId>com.github.shijingsh</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.drtrang</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.10</version>
