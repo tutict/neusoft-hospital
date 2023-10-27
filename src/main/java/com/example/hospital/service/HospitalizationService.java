@@ -46,22 +46,22 @@ public class HospitalizationService {
     }
 
     public List<Hospitalization> findHospitalization(
-            Long hospitalizationId,
+            Long hospId,
             Long patientId,
-            Long wardId,
-            LocalDateTime hospitalizationDate,
-            LocalDateTime hospitalizationDischargeDate,
-            Integer hospitalizationStatus
+            LocalDateTime admissionDate,
+            LocalDateTime dischargeDate,
+            String roomNumber,
+            String bedNumber
     ){
         return hospitalizationRepository.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            addIfNotNull(predicates, hospitalizationId, value -> criteriaBuilder.equal(root.get("hospitalizationId"), value));
+            addIfNotNull(predicates, hospId, value -> criteriaBuilder.equal(root.get("hospitalizationId"), value));
             addIfNotNull(predicates, patientId, value -> criteriaBuilder.equal(root.get("patientId"), value));
-            addIfNotNull(predicates, wardId, value -> criteriaBuilder.equal(root.get("wardId"), value));
-            addIfNotNull(predicates, hospitalizationDate, value -> criteriaBuilder.equal(root.get("hospitalizationDate"), value));
-            addIfNotNull(predicates, hospitalizationDischargeDate, value -> criteriaBuilder.equal(root.get("hospitalizationDischargeDate"), value));
-            addIfNotNull(predicates, hospitalizationStatus, value -> criteriaBuilder.equal(root.get("hospitalizationStatus"), value));
+            addIfNotNull(predicates, admissionDate, value -> criteriaBuilder.equal(root.get("hospitalizationDate"), value));
+            addIfNotNull(predicates, dischargeDate, value -> criteriaBuilder.equal(root.get("hospitalizationDischargeDate"), value));
+            addIfNotNull(predicates, roomNumber, value -> criteriaBuilder.equal(root.get("hospitalizationRoomNumber"), value));
+            addIfNotNull(predicates, bedNumber, value -> criteriaBuilder.equal(root.get("hospitalizationBedNumber"), value));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });

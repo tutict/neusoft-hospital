@@ -2,6 +2,7 @@ package com.example.hospital.service;
 
 import com.example.hospital.model.Nurse;
 import com.example.hospital.repository.NurseRepository;
+import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.criteria.Predicate;
 
@@ -47,22 +48,21 @@ public class NurseService {
     public List<Nurse> findNurse(
             Long nurseId,
             String nurseName,
-            String nurseAddress,
-            String nursePhone,
-            String nurseEmail,
-            String nursePassword,
-            Integer nurseStatus
+            String telephone,
+            Long deptId,
+            Integer active,
+            LocalDateTime createTime
     ){
         return nurseRepository.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             addIfNotNull(predicates, nurseId, value -> criteriaBuilder.equal(root.get("nurseId"), value));
             addIfNotNull(predicates, nurseName, value -> criteriaBuilder.equal(root.get("nurseName"), value));
-            addIfNotNull(predicates, nurseAddress, value -> criteriaBuilder.equal(root.get("nurseAddress"), value));
-            addIfNotNull(predicates, nursePhone, value -> criteriaBuilder.equal(root.get("nursePhone"), value));
-            addIfNotNull(predicates, nurseEmail, value -> criteriaBuilder.equal(root.get("nurseEmail"), value));
-            addIfNotNull(predicates, nursePassword, value -> criteriaBuilder.equal(root.get("nursePassword"), value));
-            addIfNotNull(predicates, nurseStatus, value -> criteriaBuilder.equal(root.get("nurseStatus"), value));
+            addIfNotNull(predicates, telephone, value -> criteriaBuilder.equal(root.get("telephone"), value));
+            addIfNotNull(predicates, deptId, value -> criteriaBuilder.equal(root.get("deptId"), value));
+            addIfNotNull(predicates, active, value -> criteriaBuilder.equal(root.get("active"), value));
+            addIfNotNull(predicates, createTime, value -> criteriaBuilder.equal(root.get("createTime"), value));
+
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });

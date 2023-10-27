@@ -6,6 +6,7 @@ import com.example.hospital.repository.PrescriptionDetailRepository;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,23 +47,24 @@ public class PrescriptionDetailService {
     }
 
     public List<PrescriptionDetail> findPrescriptionDetail(
-            Long prescriptionDetailId,
+            Long detailId,
             Long prescriptionId,
-            Long itemId,
+            String medicationName,
             Integer quantity,
-            Double price,
-            Double amount
+            BigDecimal unitPrice,
+            BigDecimal totalPrice,
+            String dosageInstructions
     ){
         return prescriptionDetailRepository.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            addIfNotNull(predicates, prescriptionDetailId, value -> criteriaBuilder.equal(root.get("prescriptionDetailId"), value));
-            addIfNotNull(predicates, prescriptionId, value -> criteriaBuilder.equal(root.get("prescriptionId"), value));
-            addIfNotNull(predicates, itemId, value -> criteriaBuilder.equal(root.get("itemId"), value));
             addIfNotNull(predicates, quantity, value -> criteriaBuilder.equal(root.get("quantity"), value));
-            addIfNotNull(predicates, price, value -> criteriaBuilder.equal(root.get("price"), value));
-            addIfNotNull(predicates, amount, value -> criteriaBuilder.equal(root.get("amount"), value));
-
+            addIfNotNull(predicates, unitPrice, value -> criteriaBuilder.equal(root.get("unitPrice"), value));
+            addIfNotNull(predicates, totalPrice, value -> criteriaBuilder.equal(root.get("totalPrice"), value));
+            addIfNotNull(predicates, dosageInstructions, value -> criteriaBuilder.equal(root.get("dosageInstructions"), value));
+            addIfNotNull(predicates, detailId, value -> criteriaBuilder.equal(root.get("detailId"), value));
+            addIfNotNull(predicates, medicationName, value -> criteriaBuilder.equal(root.get("medicationName"), value));
+            addIfNotNull(predicates, prescriptionId, value -> criteriaBuilder.equal(root.get("prescription").get("prescriptionId"), value));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
     }

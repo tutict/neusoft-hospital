@@ -45,20 +45,20 @@ public class PatientExaminationsService {
     }
 
     public List<PatientExaminations> findPatientExaminations(
-            Long patientExaminationsId,
+            Long examId,
             Long patientId,
-            Long examinationId,
-            LocalDateTime patientExaminationsDate,
-            Integer patientExaminationsStatus
+            Long itemId,
+            LocalDateTime examDate,
+            Integer result
     ){
         return patientExaminationsRepository.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            addIfNotNull(predicates, patientExaminationsId, value -> criteriaBuilder.equal(root.get("patientExaminationsId"), value));
+            addIfNotNull(predicates, examId, value -> criteriaBuilder.equal(root.get("patientExaminationsId"), value));
             addIfNotNull(predicates, patientId, value -> criteriaBuilder.equal(root.get("patientId"), value));
-            addIfNotNull(predicates, examinationId, value -> criteriaBuilder.equal(root.get("examinationId"), value));
-            addIfNotNull(predicates, patientExaminationsDate, value -> criteriaBuilder.equal(root.get("patientExaminationsDate"), value));
-            addIfNotNull(predicates, patientExaminationsStatus, value -> criteriaBuilder.equal(root.get("patientExaminationsStatus"), value));
+            addIfNotNull(predicates, itemId, value -> criteriaBuilder.equal(root.get("examinationId"), value));
+            addIfNotNull(predicates, examDate, value -> criteriaBuilder.equal(root.get("patientExaminationsDate"), value));
+            addIfNotNull(predicates, result, value -> criteriaBuilder.equal(root.get("patientExaminationsStatus"), value));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });

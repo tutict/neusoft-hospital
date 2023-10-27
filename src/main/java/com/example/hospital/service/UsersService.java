@@ -5,7 +5,6 @@ import com.example.hospital.repository.UsersRepository;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.criteria.Predicate;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,19 +43,16 @@ public class UsersService {
         });
     }
 
-    public List<Users> findUsers(String username, String password, String realname, String telephone, Long deptId, Long userType, Integer active, LocalDateTime createTime, LocalDateTime lastLogin) {
+    public List<Users> findUsers(String username, String password, String email, String phone, Long userId, Long userType) {
         return usersRepository.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             addIfNotNull(predicates, username, value -> criteriaBuilder.like(root.get("username"), "%" + value + "%"));
             addIfNotNull(predicates, password, value -> criteriaBuilder.equal(root.get("password"), value));
-            addIfNotNull(predicates, realname, value -> criteriaBuilder.like(root.get("realname"), "%" + value + "%"));
-            addIfNotNull(predicates, telephone, value -> criteriaBuilder.equal(root.get("telephone"), value));
-            addIfNotNull(predicates, deptId, value -> criteriaBuilder.equal(root.get("deptId"), value));
             addIfNotNull(predicates, userType, value -> criteriaBuilder.equal(root.get("userType"), value));
-            addIfNotNull(predicates, active, value -> criteriaBuilder.equal(root.get("active"), value));
-            addIfNotNull(predicates, createTime, value -> criteriaBuilder.equal(root.get("createTime"), value));
-            addIfNotNull(predicates, lastLogin, value -> criteriaBuilder.equal(root.get("lastLogin"), value));
+            addIfNotNull(predicates, email, value -> criteriaBuilder.like(root.get("email"), "%" + value + "%"));
+            addIfNotNull(predicates, phone, value -> criteriaBuilder.like(root.get("phone"), "%" + value + "%"));
+            addIfNotNull(predicates, userId, value -> criteriaBuilder.equal(root.get("userId"), value));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });

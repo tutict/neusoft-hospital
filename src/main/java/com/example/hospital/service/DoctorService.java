@@ -38,11 +38,12 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
-    public List<Doctor> findDoctors(String name, String password, String realname, String telephone, Long deptId, Long userType, Integer active, LocalDateTime createTime, LocalDateTime lastLogin) {
+    public List<Doctor> findDoctors(Long userId, String username, String password, String realname, String telephone, Long deptId, Long userType, Integer active, LocalDateTime createTime, LocalDateTime lastLogin) {
         return doctorRepository.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            addIfNotNull(predicates, name, value -> criteriaBuilder.equal(root.get("name"), value));
+            addIfNotNull(predicates, userId, value -> criteriaBuilder.equal(root.get("userId"), value));
+            addIfNotNull(predicates, username, value -> criteriaBuilder.equal(root.get("name"), value));
             addIfNotNull(predicates, password, value -> criteriaBuilder.equal(root.get("password"), value));
             addIfNotNull(predicates, realname, value -> criteriaBuilder.equal(root.get("realname"), value));
             addIfNotNull(predicates, telephone, value -> criteriaBuilder.equal(root.get("telephone"), value));

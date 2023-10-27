@@ -14,6 +14,6 @@ public class patientNurses {
     @Column(name = "patient_id", nullable = false)
     private Long patientId;
 
-    @Column(name = "nurses_id", nullable = false)
+    @Column(name = "nurse_id", nullable = false)
     private Long nursesId;
 }

@@ -4,7 +4,7 @@ import com.example.hospital.model.Registration;
 import com.example.hospital.repository.RegistrationRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,12 +49,9 @@ public class RegistrationService {
             Long regId,
             Long patientId,
             Long deptId,
-            LocalDateTime regDate,
-            Integer regLevel,
-            Integer settle,
-            LocalDateTime settleDate,
-            Double fee,
-            Integer regStatus
+            Long doctorId,
+            LocalDate registrationDate,
+            Registration.RegistrationStatus status
     ){
         return registrationRepository.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -62,12 +59,9 @@ public class RegistrationService {
             addIfNotNull(predicates, regId, value -> criteriaBuilder.equal(root.get("regId"), value));
             addIfNotNull(predicates, patientId, value -> criteriaBuilder.equal(root.get("patientId"), value));
             addIfNotNull(predicates, deptId, value -> criteriaBuilder.equal(root.get("deptId"), value));
-            addIfNotNull(predicates, regDate, value -> criteriaBuilder.equal(root.get("regDate"), value));
-            addIfNotNull(predicates, regLevel, value -> criteriaBuilder.equal(root.get("regLevel"), value));
-            addIfNotNull(predicates, settle, value -> criteriaBuilder.equal(root.get("settle"), value));
-            addIfNotNull(predicates, settleDate, value -> criteriaBuilder.equal(root.get("settleDate"), value));
-            addIfNotNull(predicates, fee, value -> criteriaBuilder.equal(root.get("fee"), value));
-            addIfNotNull(predicates, regStatus, value -> criteriaBuilder.equal(root.get("regStatus"), value));
+            addIfNotNull(predicates, doctorId, value -> criteriaBuilder.equal(root.get("doctorId"), value));
+            addIfNotNull(predicates, registrationDate, value -> criteriaBuilder.equal(root.get("registrationDate"), value));
+            addIfNotNull(predicates, status, value -> criteriaBuilder.equal(root.get("status"), value));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });

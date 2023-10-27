@@ -38,10 +38,11 @@ public class examinationItemService {
         return ExaminationItemRepository.save(examinationItem);
     }
 
-    public List<examinationItem> findExaminationItem(String itemName, Double cost){
+    public List<examinationItem> findExaminationItem(Long itemId, String itemName, Double cost){
         return ExaminationItemRepository.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
+            addIfNotNull(predicates, itemId, value -> criteriaBuilder.equal(root.get("itemId"), value));
             addIfNotNull(predicates, itemName, value -> criteriaBuilder.equal(root.get("itemName"), value));
             addIfNotNull(predicates, cost, value -> criteriaBuilder.equal(root.get("cost"), value));
 
