@@ -10,6 +10,29 @@
     "vuex": "latest",
     "axios": "latest",
     "element-plus": "latest",
-    "veaury": "latest"
+    "@element-plus/icons-vue": "latest",
+    "veaury": "latest",
+    "react-scripts": "latest",
+    "babel-core": "latest",
+    "webpack": "latest",
+    "webpack-cli": "latest"
+  },
+  "scripts": {
+    "build": "vue-cli-service build",
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
