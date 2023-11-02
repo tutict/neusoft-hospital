@@ -52,6 +52,7 @@ module.exports = {
         extensions: ['.vue', '.js', '.jsx']  // 允许在导入时省略.js和.jsx扩展名
     },
     devServer: {
+        hot: true,
         static: {
             directory: path.join(__dirname, 'public'),
         },
