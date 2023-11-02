@@ -7,7 +7,6 @@ const HomePageVue= applyVueInReact(HomePage);
 function HomePageReact() {
     return (
       <div>
-          <h1>React App</h1>
           <HomePageVue />
       </div>
     );

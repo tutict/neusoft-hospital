@@ -1,36 +1,3 @@
-<script lang="ts" setup>
-import { ref } from 'vue'
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-} from '@element-plus/icons-vue'
-
-
-const isCollapse = ref(true)
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const activeIndex2 = ref('1')
-const handleSelect = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-
-</script>
-
-
-<style>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  min-height: 400px;
-}
-</style>
-
-
 <template>
   <div class="common-layout">
     <el-container>
@@ -48,7 +15,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
         >
           <el-sub-menu index="1">
             <template #title>
-              <el-icon><Location /></el-icon>
+              <el-icon><location /></el-icon>
               <span>Navigator One</span>
             </template>
             <el-menu-item-group>
@@ -112,3 +79,32 @@ const handleSelect = (key: string, keyPath: string[]) => {
     </el-container>
   </div>
 </template>
+<script setup>
+import { ref } from 'vue'
+import {
+  Document,
+  Menu as IconMenu,
+  Location,
+  Setting,
+} from '@element-plus/icons-vue'
+const isCollapse = ref(true)
+import { ElRadioButton, ElRadioGroup, ElIcon, ElMenuItem, ElMenuItemGroup, ElSubMenu, ElMenu, ElAside, ElHeader, ElMain, ElContainer } from 'element-plus';
+const handleOpen = (key, keyPath) => {
+  console.log(key, keyPath)
+}
+const handleClose = (key, keyPath) => {
+  console.log(key, keyPath)
+}
+const activeIndex2 = ref('1')
+const handleSelect = (key, keyPath) => {
+  console.log(key, keyPath)
+}
+
+</script>
+
+<style>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+</style>
