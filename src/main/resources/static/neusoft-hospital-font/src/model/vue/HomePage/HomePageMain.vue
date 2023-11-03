@@ -1,22 +1,9 @@
 <script setup>
 import { ElCarouselItem, ElCarousel, ElText, ElMain, ElFooter, ElDivider } from 'element-plus';
-import {onBeforeUnmount, onMounted, ref} from "vue";
-let lastScrollTop = ref(0);
-let isScrollingUp = ref(false);
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+AOS.init();
 
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
-
-function handleScroll() {
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  isScrollingUp.value = scrollTop < lastScrollTop.value;
-  lastScrollTop.value = scrollTop;
-}
 </script>
 
 <template>
@@ -39,10 +26,12 @@ function handleScroll() {
               赋能医疗变革</h4>
           </el-carousel-item>
         </el-carousel>
-        <div class="{ 'show-styles': isScrollingUp }" id="myElement">
-
+        <div data-aos="fade-up" data-aos-duration="500">
+          <el-divider border-style="double" />
+          <el-text>东软云医院</el-text>
         </div>
-      <el-footer>
+
+        <el-footer>
         <el-divider border-style="double" />
         <el-text>@ by tutict</el-text>
       </el-footer>
@@ -97,12 +86,5 @@ function handleScroll() {
   scrollbar-width: none;
 }
 
-.show-styles {
-  transition: opacity 0.5s ease-in-out;
-  opacity: 1;
-}
 
-#myElement {
-  opacity: 0;
-}
 </style>

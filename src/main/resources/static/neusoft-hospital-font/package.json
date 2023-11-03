@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@element-plus/icons-vue": "latest",
+    "aos": "^2.3.4",
     "axios": "latest",
     "babel-core": "latest",
     "element-plus": "latest",
