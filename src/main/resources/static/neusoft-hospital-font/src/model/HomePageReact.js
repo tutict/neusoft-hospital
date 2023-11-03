@@ -1,11 +1,18 @@
-import { applyVueInReact } from "veaury";
-import HomePage from "./vue/HomePage/HomePageMenu.vue";
+import {applyVueInReact } from "veaury";
+import HomePageMenu from "./vue/HomePage/HomePageMenu.vue";
+import HomePageMain from "./vue/HomePage/HomePageMain.vue";
 import React from "react";
+import vue from 'vue';
 
-const HomePageVue= applyVueInReact(HomePage);
+const HomePageMenuVue= applyVueInReact(HomePageMenu);
+const HomePageMainVue= applyVueInReact(HomePageMain);
 function HomePageReact() {
     return (
-          <HomePageVue />
+        <HomePageMenuVue>
+            {{
+                mainContent: <HomePageMainVue/>
+            }}
+        </HomePageMenuVue>
     );
 
 }
